@@ -1,0 +1,41 @@
+@import "tailwindcss";
+
+/* * {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+} */
+html,
+body,
+#root {
+  width: 100%;
+}
+html {
+  font-family:
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    Roboto,
+    Oxygen,
+    Ubuntu,
+    Cantarell,
+    "Open Sans",
+    "Helvetica Neue",
+    sans-serif;
+}
+.asideContent {
+  /* width: fit-content; */
+  padding-inline: 0.5rem;
+  font-size: 1.2rem;
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding-block: 0.2rem;
+  transition: all 0.1s linear;
+}
+.asideContent:hover{
+  background-color: #373636;
+
+}
