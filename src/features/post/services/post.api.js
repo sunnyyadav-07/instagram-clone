@@ -1,10 +1,11 @@
-import axios from "axios";
-const api = axios.create({
-  baseURL: "http://localhost:3000",
-  withCredentials: true,
-});
+import { api } from "../../config/axiosInstance";
+
 
 export async function getFeed() {
-  const response = await api.get("/api/posts/feed");
+  const response = await api.get("/posts/feed");
+  return response.data;
+}
+export async function getUserPost() {
+  const response = await api.get("/posts/user-post");
   return response.data;
 }

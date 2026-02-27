@@ -1,11 +1,16 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useAuthContext } from "../features/auth/hooks/useAuthContext";
+import { usePostContext } from "../features/post/hook/usePostContext";
+import UserAllPosts from "../components/userAllPosts";
 
 const Profile = () => {
   const { handleGetMe, user } = useAuthContext();
+  const { post, loading ,handleGetUserPost} = usePostContext();
+  console.log(post);
   console.log(user);
   useEffect(() => {
-    handleGetMe();
+    handleGetMe()
+    handleGetUserPost()
   }, []);
   return (
     <div className="max-w-3xl mx-auto text-white p-4">
@@ -24,14 +29,13 @@ const Profile = () => {
         <div className="flex flex-col gap-2 flex-1">
           {/* username row */}
           <div className="flex items-center gap-3">
-            <h2 className="text-xl font-semibold">{user.username  }</h2>
-
+            <h2 className="text-xl font-semibold">{user.username}</h2>
           </div>
 
           {/* stats */}
           <div className="flex gap-6 text-sm">
             <span>
-              <b>4</b> posts
+              <b>{post?.posts.length}</b> posts
             </span>
             <span>
               <b>{user.followersCount}</b> followers
@@ -58,6 +62,7 @@ const Profile = () => {
           saved
         </button>
       </div>
+      <UserAllPosts posts={post?.posts}/>
     </div>
   );
 };

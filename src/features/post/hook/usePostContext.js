@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { postContext } from "../post.context";
-import { getFeed } from "../services/post.api";
+import { getFeed, getUserPost } from "../services/post.api";
 
 export const usePostContext = () => {
   const context = useContext(postContext);
@@ -12,5 +12,11 @@ export const usePostContext = () => {
     setFeed(response.feed);
     setLoading(false);
   };
-  return { feed, handleGetFeed, loading, post };
+  const handleGetUserPost = async () => {
+    setLoading(true);
+    const response = await getUserPost();
+    setPost(response);
+    setLoading(false);
+  };
+  return { feed, handleGetFeed,handleGetUserPost, loading, post };
 };
