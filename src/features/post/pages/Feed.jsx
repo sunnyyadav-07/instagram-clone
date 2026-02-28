@@ -1,6 +1,13 @@
-import { FaRegHeart, FaRegComment, FaRegBookmark } from "react-icons/fa";
+import {
+  FaHeart,
+  FaRegHeart,
+  FaRegComment,
+  FaRegBookmark,
+} from "react-icons/fa";
 import { RiSendPlaneLine } from "react-icons/ri";
+import { usePostContext } from "../hook/usePostContext";
 const Feed = ({ data }) => {
+  const { handleLikePost, handleUnLikePost } = usePostContext();
   return (
     <div>
       <div className="bg-[#412c2c0e] w-100 rounded-md space-y-6 p-3 border border-[#4d4c4c]">
@@ -24,8 +31,22 @@ const Feed = ({ data }) => {
         <div className="w-full flex text-2xl items-center justify-between ">
           <div className="flex gap-6 items-center">
             <div className="flex items-center gap-2 ">
-              <FaRegHeart />
-              <p className="text-xl">0</p>
+              {data.isLiked ? (
+                <FaHeart
+                  color="red"
+                  onClick={() => {
+                    handleUnLikePost(data._id);
+                  }}
+                />
+              ) : (
+                <FaRegHeart
+                  onClick={() => {
+                    handleLikePost(data._id);
+                  }}
+                />
+              )}
+
+              <p className="text-xl">{data.likeCount}</p>
             </div>
             <div className="flex items-center gap-2 ">
               <FaRegComment />

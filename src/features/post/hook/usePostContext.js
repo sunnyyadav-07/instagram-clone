@@ -1,6 +1,6 @@
 import { useContext } from "react";
 import { postContext } from "../post.context";
-import { getFeed, getUserPost } from "../services/post.api";
+import { getFeed, getUserPost, likePost } from "../services/post.api";
 
 export const usePostContext = () => {
   const context = useContext(postContext);
@@ -18,5 +18,65 @@ export const usePostContext = () => {
     setPost(response);
     setLoading(false);
   };
-  return { feed, handleGetFeed,handleGetUserPost, loading, post };
+  const handleLikePost = async (postId) => {
+    setFeed((prev) =>
+      prev.map((post) => post._id === postId)
+        ? {
+            ...post,
+            isLiked: true,
+            likeCount: post?.likeCount + 1,
+          }
+        : post,
+    );
+    try {
+      await likePost(postId);
+    } catch (error) {
+      setFeed((prev) =>
+        prev.map((post) =>
+          post._id === postId
+            ? {
+                ...post,
+                isLiked: false,
+                likeCount: post?.likeCount - 1,
+              }
+            : post,
+        ),
+      );
+    }
+  };
+  const handleUnLikePost = async (postId) => {
+    setFeed((prev) =>
+      prev.map((post) => post._id === postId)
+        ? {
+            ...post,
+            isLiked: false,
+            likeCount: post?.likeCount - 1,
+          }
+        : post,
+    );
+    try {
+      await likePost(postId);
+    } catch (error) {
+      setFeed((prev) =>
+        prev.map((post) =>
+          post._id === postId
+            ? {
+                ...post,
+                isLiked: true,
+                likeCount: post?.likeCount + 1,
+              }
+            : post,
+        ),
+      );
+    }
+  };
+  return {
+    feed,
+    handleGetFeed,
+    handleGetUserPost,
+    handleLikePost,
+    handleUnLikePost,
+    loading,
+    post,
+  };
 };
